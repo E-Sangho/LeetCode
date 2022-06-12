@@ -4,7 +4,7 @@ var Node = function(val) {
 };
 
 var MyLinkedList = function() {
-    this.head = null
+    this.head = null;
 };
 
 /** 
@@ -40,9 +40,6 @@ MyLinkedList.prototype.addAtHead = function(val) {
 
     if (this.head !== null) {
         newHead.next = this.head;
-        this.head = newHead;
-        
-        return;
     }
     this.head = newHead;
 };
@@ -82,15 +79,14 @@ MyLinkedList.prototype.addAtIndex = function(index, val) {
         return;
     }
     
-    let newNode = new Node(val);
     
     if (index === 0) {
-        newNode.next = this.head;
-        this.head = newNode;
+        this.addAtHead(val);
     }
     
     let count = 0;
     let curNode = this.head;
+    let newNode = new Node(val);
     
     while (count < index - 1 && curNode.next !== null) {
         ++count;
@@ -108,6 +104,10 @@ MyLinkedList.prototype.addAtIndex = function(index, val) {
  * @return {void}
  */
 MyLinkedList.prototype.deleteAtIndex = function(index) {
+    if (this.head === null) {
+        return;
+    }
+    
     if (index === 0) {
         this.head = this.head.next;
     }
