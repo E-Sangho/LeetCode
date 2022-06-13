@@ -1,5 +1,6 @@
 var Node = function(val) {
     this.val = val;
+    this.prev =null;
     this.next = null; 
 };
 
@@ -14,15 +15,7 @@ var MyLinkedList = function() {
  * @return {number}
  */
 MyLinkedList.prototype.get = function(index) {
-    if (index > this.size - 1) {
-        return -1;
-    }
-    
-    if (0 > index) {
-        return -1;
-    }
-    
-    if (this.size === 0) {
+    if (index > this.size - 1 || 0 > index || this.size === 0) {
         return -1;
     }
     
@@ -44,6 +37,7 @@ MyLinkedList.prototype.addAtHead = function(val) {
     
     if (this.size !== 0) {
         newHead.next = this.head; 
+        this.head.prev = newHead;
     } else {
         this.tail = newHead;
     }
@@ -61,12 +55,11 @@ MyLinkedList.prototype.addAtTail = function(val) {
     
     if (this.size !== 0) {
         this.tail.next = newTail;
-        this.tail = newTail;
-        ++this.size;
-        return;
+        newTail.prev = this.tail;
+    } else {
+        this.head = newTail;
     }
     
-    this.head = newTail;
     this.tail = newTail;
     ++this.size;
 };
@@ -91,15 +84,19 @@ MyLinkedList.prototype.addAtIndex = function(index, val) {
         return;
     }
     
-    let curNode = this.head;
+    let nextNode = this.head;
     let newNode = new Node(val);
 
-    for (let i = 0; i < index - 1; ++i) {
-        curNode = curNode.next;
+    for (let i = 0; i < index; ++i) {
+        nextNode = nextNode.next;
     }
     
-    newNode.next = curNode.next;
-    curNode.next = newNode;
+    let prevNode = nextNode.prev;
+    
+    newNode.next = nextNode;
+    newNode.prev = prevNode;
+    nextNode.prev = newNode;
+    prevNode.next = newNode;
     ++this.size;
 };
 
@@ -118,17 +115,23 @@ MyLinkedList.prototype.deleteAtIndex = function(index) {
         return;
     }
     
-    let curNode = this.head;
+    let deletedNode = this.head;
     
-    for (let i = 0; i < index - 1; ++i) {
-        curNode = curNode.next;
+    for (let i = 0; i < index; ++i) {
+        deletedNode = deletedNode.next;
     }
     
-    curNode.next = curNode.next.next;
-    if (curNode.next === null) {
-        this.tail = curNode;
+    if (deletedNode.next === null) {
+        this.tail = deletedNode.prev;
+        this.tail.next = null;
+    } else {
+        let prevNode = deletedNode.prev;
+        let nextNode = deletedNode.next;
+        
+        prevNode.next = nextNode;
+        nextNode.prev = prevNode;
     }
-    --this.size;
+        --this.size; 
 };
 
 /** 
