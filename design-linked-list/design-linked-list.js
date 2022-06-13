@@ -115,23 +115,26 @@ MyLinkedList.prototype.deleteAtIndex = function(index) {
         return;
     }
     
+    if (index === this.size - 1) {
+        this.tail = this.tail.prev;
+        this.tail.next = null;
+        --this.size;
+        return;
+    }
+    
     let deletedNode = this.head;
     
     for (let i = 0; i < index; ++i) {
         deletedNode = deletedNode.next;
     }
     
-    if (deletedNode.next === null) {
-        this.tail = deletedNode.prev;
-        this.tail.next = null;
-    } else {
-        let prevNode = deletedNode.prev;
-        let nextNode = deletedNode.next;
-        
-        prevNode.next = nextNode;
-        nextNode.prev = prevNode;
-    }
-        --this.size; 
+    let prevNode = deletedNode.prev;
+    let nextNode = deletedNode.next;
+
+    prevNode.next = nextNode;
+    nextNode.prev = prevNode;
+
+    --this.size; 
 };
 
 /** 
