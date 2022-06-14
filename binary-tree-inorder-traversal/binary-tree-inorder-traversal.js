@@ -11,6 +11,45 @@
  * @return {number[]}
  */
 var inorderTraversal = function(root) {
+    /*
+        1. 노드의 left, right가 모두 있는 경우
+        2. 노드의 left만 있는 경우
+        3. 노드의 right만 있는 경우
+        4. 노드의 left, right가 모두 없는 경우
+
+        1,2 => left를 스택에 추가 
+        3 => 현재 노드를 path에 추가하고 스택에서 제거, right를 스택에 추가
+        4 => 현재 노드를 path에 추가하고 스택에서 제거 => 상위 노드로 이동 => 상위 노드는 1,2인 상태지만 left가 없는 상태로 취급해줘야 함(즉, 3,4로 취급되어야 함)
+    */ 
+    if (root === null) {
+        return [];
+    }
+
+    let stack = [root];
+    let path = [];
+    let flag = true;
+
+    while (stack.length > 0) {
+        let top = stack[stack.length - 1]; 
+        if (flag && top.left !== null) {
+            stack.push(top.left);
+            flag = true;
+        } else {
+            if (top.right !== null) {
+                path.push(top.val);
+                stack.pop();
+                stack.push(top.right);
+                flag = true;
+            } else {
+                path.push(top.val);
+                stack.pop();
+                flag = false;
+            }
+        }
+    }
+    
+    return path;
+    /*
     if (root === null) {
         return []; 
     }
@@ -23,4 +62,5 @@ var inorderTraversal = function(root) {
     let right = inorderTraversal(root.right);
     
     return [...left, root.val, ...right];
+    */
 };
