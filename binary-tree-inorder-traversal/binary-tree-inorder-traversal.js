@@ -21,30 +21,20 @@ var inorderTraversal = function(root) {
         3 => 현재 노드를 path에 추가하고 스택에서 제거, right를 스택에 추가
         4 => 현재 노드를 path에 추가하고 스택에서 제거 => 상위 노드로 이동 => 상위 노드는 1,2인 상태지만 left가 없는 상태로 취급해줘야 함(즉, 3,4로 취급되어야 함)
     */ 
-    if (root === null) {
-        return [];
-    }
 
-    let stack = [root];
+    let stack = [];
     let path = [];
     let flag = true;
+    let curNode = root;
 
-    while (stack.length > 0) {
-        let top = stack[stack.length - 1]; 
-        if (flag && top.left !== null) {
-            stack.push(top.left);
-            flag = true;
+    while (curNode !== null || stack.length > 0) {
+        if (curNode !== null) {
+            stack.push(curNode);
+            curNode = curNode.left; 
         } else {
-            if (top.right !== null) {
-                path.push(top.val);
-                stack.pop();
-                stack.push(top.right);
-                flag = true;
-            } else {
-                path.push(top.val);
-                stack.pop();
-                flag = false;
-            }
+            curNode = stack.pop();
+            path.push(curNode.val);
+            curNode = curNode.right; 
         }
     }
     
