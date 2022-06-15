@@ -11,6 +11,27 @@
  * @return {number[]}
  */
 var preorderTraversal = function(root) {
+    if (root === null) {
+        return [];
+    }
+    let stack = [root];
+    let path = [];  
+    let curNode;
+    while (stack.length > 0) {
+        curNode = stack.pop();
+        
+        path.push(curNode.val); 
+        
+        if (curNode.right !== null) {
+            stack.push(curNode.right);
+        }
+        
+        if (curNode.left!== null) {
+            stack.push(curNode.left);
+        }
+    }
+    return path;
+    /*
     let path = [];
     let stack = [];
     stack.push(root);
@@ -26,6 +47,7 @@ var preorderTraversal = function(root) {
     }
     
     return path;
+    */
     /*
     if (root === null) {
         return []; 
