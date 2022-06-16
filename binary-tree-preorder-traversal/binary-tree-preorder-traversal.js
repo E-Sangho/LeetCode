@@ -11,7 +11,7 @@
  * @return {number[]}
  */
 var preorderTraversal = function(root) {
-    let stack = [];
+	let stack = [];
 	let curNode = root;
 	let path = [];
 
@@ -25,21 +25,6 @@ var preorderTraversal = function(root) {
 			curNode = curNode.right;
 		}
 	}
-    
-    return path;
 
-    /*
-    if (root === null) {
-        return []; 
-    }
-    
-    if (root.left === null && root.right === null) {
-        return [root.val];
-    }
-    
-    let left = preorderTraversal(root.left);
-    let right = preorderTraversal(root.right);
-   
-    return [root.val, ...left, ...right];
-    */
+	return path;
 };
