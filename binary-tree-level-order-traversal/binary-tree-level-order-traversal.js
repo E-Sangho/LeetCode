@@ -19,26 +19,25 @@ var levelOrder = function(root) {
     }
 
     while (queue.length > 0) {
-        let nextLevel = [];
-        let curLevel = [];
+        let size = queue.length;
+        let curLevel = [];  
 
-        while (queue.length > 0) {
+        for (let i = 0; i < size; ++i) {
             let front = queue.shift();
             
             curLevel.push(front.val);
             
             if (front.left !== null) {
-                nextLevel.push(front.left);
+                queue.push(front.left);
             }
             
             if (front.right !== null) {
-                nextLevel.push(front.right);
+                queue.push(front.right);
             }
+            
         }
         
         level.push(curLevel);
-
-        queue = nextLevel;
     }
     
     return level;
