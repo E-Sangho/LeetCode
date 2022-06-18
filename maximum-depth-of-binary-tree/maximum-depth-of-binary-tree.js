@@ -14,7 +14,7 @@
 
 
 var maxDepth = function(root) {
-    return BottomUp(root); 
+    return TopDown(root); 
 };
 
 function TopDown(root) {
@@ -29,11 +29,11 @@ function TopDown(root) {
             answer = Math.max(answer, depth);
         }
 
-        TopDown(root.left, depth + 1);
-        TopDown(root.right, depth + 1);
+        UtilTopDown(root.left, depth + 1);
+        UtilTopDown(root.right, depth + 1);
     }
     
-    UtilTopDown(root);
+    UtilTopDown(root, 1);
     return answer;
 }
 
