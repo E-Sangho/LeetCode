@@ -19,44 +19,22 @@ function Recursive(root) {
     RecursiveUtil(root);
     return count;
     
-    function RecursiveUtil(root) {
-        if (root === null) {
-            return null;
+    function RecursiveUtil(node) {
+        if (node === null) {
+            return true;
         }
         
-        let left = RecursiveUtil(root.left);
-        let right = RecursiveUtil(root.right);
+        let left = RecursiveUtil(node.left);
+        let right = RecursiveUtil(node.right);
         
-        if (left === null && right === null) {
+        if (left && right) {
+            if ((node.left && node.val !== node.left.val) || (node.right && node.val !== node.right.val)) {
+                return false;
+            }
             ++count;
-            return root.val;
+            return true;
         }
         
-        if (left === null && right !== null) {
-            if (root.val === right) {
-                ++count;
-                return root.val;
-            }
-        }
-        
-        if (left !== null && right === null) {
-            if (root.val === left) {
-                ++count;
-                return root.val;
-            }
-        }
-            
-        if (left === right) {
-           if (root.val === left) {
-               ++count;
-               return root.val;
-           } 
-        }
-            
-        return -1001;
+        return false;
     }
-}
-
-function Iterative(root) {
-    
 }
