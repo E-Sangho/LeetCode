@@ -11,8 +11,57 @@
  * @return {boolean}
  */
 var isSymmetric = function(root) {
-    return recursive(root);  
+    return iterative(root);  
 };
+
+var iterative = function(root) {
+    let left = iterativeLeft(root.left);
+    let right = iterativeRight(root.right);
+    console.log(left);
+    console.log(right);
+
+    return JSON.stringify(left) === JSON.stringify(right);
+    
+    function iterativeLeft(root) {
+        let stack = [];
+        let curNode = root;
+        let path = [];
+
+        while (curNode !== null || stack.length > 0) {
+            if (curNode !== null) {
+                stack.push(curNode);
+                path.push(curNode.val);
+                curNode = curNode.left;
+            } else {
+                path.push(null);
+                curNode = stack.pop();
+                curNode = curNode.right;
+            }
+
+        }
+
+        return path;
+    }
+    
+    function iterativeRight(root) {
+        let stack = [];
+        let curNode = root;
+        let path = [];
+        while (curNode !== null || stack.length > 0) {
+            if (curNode !== null) {
+                stack.push(curNode);
+                path.push(curNode.val);
+                curNode = curNode.right;
+            } else {
+                path.push(null);
+                curNode = stack.pop();
+                curNode = curNode.left;
+            }
+        }
+        
+        return path;
+    }
+}
 
 var recursive = function(root) {
     let leftPath = [];
