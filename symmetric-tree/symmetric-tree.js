@@ -17,8 +17,6 @@ var isSymmetric = function(root) {
 var iterative = function(root) {
     let left = iterativeLeft(root.left);
     let right = iterativeRight(root.right);
-    console.log(left);
-    console.log(right);
 
     return JSON.stringify(left) === JSON.stringify(right);
     
@@ -69,6 +67,11 @@ var recursive = function(root) {
     let left = root.left;
     let right = root.right;
     
+    priorLeft(left);
+    priorRight(right);
+    
+    return JSON.stringify(leftPath) == JSON.stringify(rightPath);
+    
     function priorLeft(node) {
         if (node === null) {
             leftPath.push(null);
@@ -92,9 +95,4 @@ var recursive = function(root) {
         priorRight(node.right);
         priorRight(node.left);
     }
-    
-    priorLeft(left);
-    priorRight(right);
-    
-    return JSON.stringify(leftPath) == JSON.stringify(rightPath);
 }
