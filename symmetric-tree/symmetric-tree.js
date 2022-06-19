@@ -46,7 +46,6 @@ var recursive = function(root) {
     
     priorLeft(left);
     priorRight(right);
-    console.log(leftPath);
-    console.log(rightPath);
+    
     return JSON.stringify(leftPath) == JSON.stringify(rightPath);
 }
