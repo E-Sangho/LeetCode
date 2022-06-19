@@ -15,6 +15,38 @@ var hasPathSum = function(root, targetSum) {
     return Recursive(root, targetSum);
 };
 
+function Iterative(root, targetSum) {
+    let stack = [];
+    let curNode = root; 
+    let sum = 0;
+    let ans = false;
+
+    while (!ans && (curNode !== null || stack.length > 0)) {
+        if (curNode !== null) {
+            stack.push(curNode);
+            sum += curNode.val;
+            
+            if (sum === targetSum) {
+                ans = true; 
+            }
+            
+            curNode = curNode.left;
+        } else {
+            curNode = stack.pop();
+            
+            if (curNode.right !== null) {
+                curNode = curNode.right;    
+                
+            } else {
+                sum -= curNode.val;
+                curNode =  null;
+            }
+        }
+    }
+    
+    return ans;
+}
+
 function Recursive(root, targetSum) {
     if (root === null) {
         return false;
