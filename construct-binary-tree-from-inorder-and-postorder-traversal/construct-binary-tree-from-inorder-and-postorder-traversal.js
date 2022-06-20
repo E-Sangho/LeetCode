@@ -19,20 +19,19 @@ var buildTree = function(inorder, postorder) {
         Indexer[inorder[i]] = i;
     }
     
-    let answer = Recursive(0, N - 1, 0, N - 1);
+    return Recursive(0, N - 1);
 
-    return answer;
-
-    function Recursive(is, ie, ps, pe) {
-        if (ps > pe) {
+    function Recursive(is, ie) {
+        if (is > ie) {
             return null;
         } 
-        let root = postorder[pe];
+        
+        let root = postorder.pop();
         let rootIndex = Indexer[root];
 
-        let left = Recursive(is, rootIndex - 1, ps, ps + rootIndex - is - 1);
-        let right = Recursive(rootIndex + 1, ie, ps + rootIndex - is, pe - 1);
-        let newNode = new TreeNode(root, left, right);
-        return newNode;
+        let right = Recursive(rootIndex + 1, ie);
+        let left = Recursive(is, rootIndex - 1)
+        
+        return new TreeNode(root, left, right);
     }  
 };
