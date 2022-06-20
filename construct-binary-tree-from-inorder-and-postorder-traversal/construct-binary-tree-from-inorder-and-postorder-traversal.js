@@ -12,7 +12,12 @@
  * @return {TreeNode}
  */
 var buildTree = function(inorder, postorder) {
+    let Indexer = {};
     let N = postorder.length;
+        
+    for (let i = 0; i < N; ++i) {
+        Indexer[inorder[i]] = i;
+    }
     
     let answer = Recursive(0, N - 1, 0, N - 1);
 
@@ -23,7 +28,7 @@ var buildTree = function(inorder, postorder) {
             return null;
         } 
         let root = postorder[pe];
-        let rootIndex = inorder.findIndex(e => e === root);
+        let rootIndex = Indexer[root];
 
         let left = Recursive(is, rootIndex - 1, ps, ps + rootIndex - is - 1);
         let right = Recursive(rootIndex + 1, ie, ps + rootIndex - is, pe - 1);
