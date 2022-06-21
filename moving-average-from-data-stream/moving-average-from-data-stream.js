@@ -12,7 +12,7 @@ var MovingAverage = function(size) {
  */
 MovingAverage.prototype.next = function(val) {
     this.queue.push(val);
-    return this.queue.avg();
+    return this.queue.sum / this.queue.size;
 };
 
 /** 
@@ -34,11 +34,13 @@ class MyQueue {
         this.tail = null;
         this.size = 0;
         this.maxSize = k
+        this.sum = 0;
     }
     
     push(val) {
         let newNode = new QueueNode(val);
         if (this.size === this.maxSize) {
+            this.sum = this.sum - this.head.val + val;
             this.head = this.head.next;
             this.tail.next = newNode;
             this.tail = newNode;    
@@ -46,27 +48,17 @@ class MyQueue {
         }    
         
         if (this.size === 0) {
+            this.sum += val;
             this.head = newNode;
             this.tail = newNode;
             ++this.size;
             return;
         }
         
+        this.sum += val;
         this.tail.next = newNode;
         this.tail = newNode;
         ++this.size;
         return;
-    }
-    
-    avg() {
-        let avg = 0;
-        let curNode = this.head;
-        
-        while (curNode !== null) {
-            avg += curNode.val;
-            curNode = curNode.next; 
-        }
-        
-        return avg / this.size;
     }
 }
