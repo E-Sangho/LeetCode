@@ -4,11 +4,6 @@
  */
 var isValid = function(s) {
     const N = s.length;
-    let mapper = {
-        ")": "(",
-        "}": "{",
-        "]": "[",
-    };
     let stack = [];
     
     for (let i = 0; i < N; ++i) {
@@ -17,7 +12,11 @@ var isValid = function(s) {
             continue;
         }
         
-        if (stack.at(-1) === mapper[s[i]]) {
+        if (
+            (stack.at(-1) === "(" && s[i] === ")") ||
+            (stack.at(-1) === "{" && s[i] === "}") ||
+            (stack.at(-1) === "[" && s[i] === "]")
+        ) {
             stack.pop();
             continue;
         }
