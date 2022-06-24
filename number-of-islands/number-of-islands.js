@@ -3,90 +3,43 @@
  * @return {number}
  */
 var numIslands = function(grid) {
-    let R = grid.length;
-    let C = grid[0].length;
-    let moveR = [0, 0, 1, -1];
-    let moveC = [1, -1, 0, 0];
-    let queue = new MyQueue();
+    let M = grid.length,
+        N = grid[0].length;      
+    const moveX = [0, 0, 1, -1],
+          moveY = [1, -1, 0, 0];  
     let count = 0;
-    
-    for (let r = 0; r < R; ++r) {
-        for (let c = 0; c < C; ++c) {
-            if (grid[r][c] === "1") {
-                queue.push([r, c]);
-                BFS();
-                ++count;
-            }
+     
+    for (let r = 0; r < M; ++r) {
+        for (let c = 0; c < N; ++c) {
+           if (grid[r][c] === "1") {
+               grid[r][c] === "0";
+               DFS(r, c);
+               ++count;
+           } 
         }
     }
     
     return count;
     
-    function BFS() {
-        while (queue.size > 0) {
-            let [r, c] = queue.pop();
-            
-            for (let i = 0; i < 4; ++i) {
-                let [newR, newC] = [r + moveR[i], c + moveC[i]];
-                if (isInBox(newR, newC)) {
-                    if (grid[newR][newC] === "1") {
-                        queue.push([newR, newC]);
-                        grid[newR][newC] = "0";
-                    } 
-                }
-            }
+
+    function DFS(m, n) {
+        for (let i = 0; i < 4; ++i) {
+            let newX = m + moveX[i],
+                newY = n + moveY[i];
+            if (isInBox(newX, newY) && grid[newX][newY] === "1") {
+                grid[newX][newY] = "0";
+                DFS(newX, newY);
+            }  
         }
+        
     }
     
-    function isInBox(row, col) {
-        if (0 <= row && row < R && 0 <= col && col < C) {
+    function isInBox(m, n) {
+        if (0 <= m && m < M && 0 <= n && n < N) {
             return true;
-        } 
+        }
         
         return false;
     }
 };
-
-class MyNode {
-    constructor(value) {
-        this.val = (value === undefined ? null : value);
-        this.next = null
-    }
-}
-
-class MyQueue {
-    constructor() {
-        this.head = null;
-        this.tail = null;
-        this.size = 0;    
-    }
-    
-    push(val) {
-        let newNode = new MyNode(val);
-            
-        if (this.size === 0) {
-            this.head = newNode;
-            this.tail = newNode;
-            ++this.size;    
-            return;
-        }
-        
-        this.tail.next = newNode;
-        this.tail = newNode;
-        ++this.size;    
-    }
-    
-    pop() {
-        if (this.size === 0) {
-            return false;
-        }        
-        
-        const front = this.head.val;
-        
-        this.head = this.head.next;
-        --this.size;
-        
-        return front;
-    }
-}
 
