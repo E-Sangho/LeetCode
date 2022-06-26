@@ -25,6 +25,9 @@ var cloneGraph = function(node) {
 };
 
 function DFS(node) {
+      if (node === null) {
+        return null;
+      }
 
     let visited = new Set();
     let nodeData = new Map();
@@ -32,9 +35,6 @@ function DFS(node) {
     return root;
     
     function DFSUtil(node) {
-        if (node === null) {
-          return null;
-        }
         if (visited.has(node.val)) {
             return nodeData.get(node.val);
         }
