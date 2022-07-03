@@ -20,15 +20,15 @@ function BestSol(nums, target) {
   dp[-nums[0] + total] += 1;
   
   for (let i = 1; i < N; ++i) {
-    let copy = JSON.parse(JSON.stringify(dp)); 
+    let next = new Array(total * 2 + 1).fill(0);
     for (let j = -total; j <= total; ++j) {
-      if (copy[i - 1][j + total] > 0) {
-        copy[i][nums[i] + total] += copy[i - 1][j + total];
-        copy[i][-nums[i] + total] += copy[i - 1][j + total];
+      if (dp[i - 1][j + total] > 0) {
+        next[i][nums[i] + total] += dp[i - 1][j + total];
+        next[i][-nums[i] + total] += dp[i - 1][j + total];
         
       }
     }
-    dp = copy;
+    dp = next;
   }
   
   return dp[N - 1][target + total];
