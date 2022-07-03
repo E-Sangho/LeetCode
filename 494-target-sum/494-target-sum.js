@@ -4,8 +4,32 @@
  * @return {number}
  */
 var findTargetSumWays = function(nums, target) {
-  return DFS(nums, target);   
+  return DPSolution(nums, target);   
 };
+
+function DPSolution(nums, target) {
+  const N = nums.length;
+  const total = nums.reduce((a, b) => a + b);
+  
+  if (Math.abs(target) > total) {
+    return 0;
+  }
+  
+  let dp = new Array(N).fill().map(() => new Array(total * 2 + 1).fill(0));
+  dp[0][nums[0] + total] = 1;
+  dp[0][-nums[0] + total] += 1;
+  
+  for (let i = 0; i < N - 1; ++i) {
+    for (let j = -total; j <= total; ++j) {
+      if (dp[i][j + total] > 0) {
+        dp[i + 1][j + nums[i + 1] + total] += dp[i][j + total];
+        dp[i + 1][j - nums[i + 1] + total] += dp[i][j + total];
+      }
+    }
+  }
+  
+  return dp[N - 1][target + total];
+}
 
 function DFS(nums, target) {
   const N = nums.length;
