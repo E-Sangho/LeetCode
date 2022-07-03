@@ -7,6 +7,33 @@ var findTargetSumWays = function(nums, target) {
   return DPSolution(nums, target);   
 };
 
+function BestSol(nums, target) {
+  const N = nums.length;
+  const total = nums.reduce((a, b) => a + b);
+  
+  if (Math.abs(target) > total) {
+    return 0;
+  }
+  
+  let dp = new Array(total * 2 + 1).fill(0);
+  dp[nums[0] + total] = 1;
+  dp[-nums[0] + total] += 1;
+  
+  for (let i = 1; i < N; ++i) {
+    let copy = JSON.parse(JSON.stringify(dp)); 
+    for (let j = -total; j <= total; ++j) {
+      if (copy[i - 1][j + total] > 0) {
+        copy[i][nums[i] + total] += copy[i - 1][j + total];
+        copy[i][-nums[i] + total] += copy[i - 1][j + total];
+        
+      }
+    }
+    dp = copy;
+  }
+  
+  return dp[N - 1][target + total];
+}
+
 function DPSolution(nums, target) {
   const N = nums.length;
   const total = nums.reduce((a, b) => a + b);
