@@ -6,18 +6,28 @@ var numSquares = function(n) {
   const list = FindPerfectNumber(n); 
   let depth = 0;
   let dp = new Array(n + 1).fill(Number.MAX_VALUE);
+  let queue = new Set();
+
+  queue.add(n);
   
-  dp[0] = 0;
-  
-  for (let j = 1; j <= n; ++j) {
-    for (let i = 0; i < list.length; ++i) {
-      if (j - list[i] >= 0) {
-        dp[j] = Math.min(dp[j], dp[j - list[i]] + 1);
+  while (queue.size > 0) {
+    ++depth;
+    let newQueue = new Set();
+    
+    for (let [_, val] of queue.entries()) {
+      for (let i = 0; i < list.length; ++i) {
+        if (val === list[i]) {
+          return depth;
+        }
+        
+        if (val > list[i]) {
+          newQueue.add(val - list[i]); 
+        }     
       }
-    }    
+    } 
+    
+    queue = newQueue;
   }
-  
-  return dp[n];
 };
 
 
