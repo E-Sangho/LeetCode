@@ -5,29 +5,19 @@
 var numSquares = function(n) {
   const list = FindPerfectNumber(n); 
   let depth = 0;
-  let queue = new MyQueue();
+  let dp = new Array(n + 1).fill(Number.MAX_VALUE);
   
-  queue.push(n); 
-
-  while (!queue.empty()) {
-    ++depth;
-    
-    const N = queue.size;
-    
-    for (let j = 0; j < N; ++j) {
-      let front = queue.pop();
-      
-      for (let i = 0; i < list.length; ++i) {
-        if (front - list[i] > 0) {
-          queue.push(front - list[i])
-        }
-
-        if (front -list[i] === 0) {
-          return depth;
-        }
-      }    
-    }
-  } 
+  dp[0] = 0;
+  
+  for (let j = 1; j <= n; ++j) {
+    for (let i = 0; i < list.length; ++i) {
+      if (j - list[i] >= 0) {
+        dp[j] = Math.min(dp[j], dp[j - list[i]] + 1);
+      }
+    }    
+  }
+  
+  return dp[n];
 };
 
 
