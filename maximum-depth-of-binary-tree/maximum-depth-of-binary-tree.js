@@ -10,41 +10,16 @@
  * @param {TreeNode} root
  * @return {number}
  */
-
-
-
 var maxDepth = function(root) {
-    return TopDown(root); 
-};
-
-function TopDown(root) {
-    let answer = 0;
+  return depth(root);
     
-    function UtilTopDown(root, depth) {
-        if (root === null) {
-            return 0;
-        }    
-        
-        if (!root.left && !root.right) {
-            answer = Math.max(answer, depth);
-        }
-
-        UtilTopDown(root.left, depth + 1);
-        UtilTopDown(root.right, depth + 1);
-    }
-    
-    UtilTopDown(root, 1);
-    return answer;
-}
-
-function BottomUp(root) {
+  function depth(root) {
     if (root === null) {
-        return 0;
+      return 0;
     }
     
-    let left = BottomUp(root.left);
-    let right = BottomUp(root.right);
-
-    return Math.max(left, right) + 1;
-    
-}
+    const left = depth(root.left) + 1;
+    const right = depth(root.right) + 1;
+    return Math.max(left, right);
+  }
+};
