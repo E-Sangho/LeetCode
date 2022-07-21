@@ -22,24 +22,24 @@ var isValidBST = function(root) {
       return [root.val, root.val, true];
     }
     
-    let leftMax = [Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, true], 
-          rightMax = [Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, true];
+    let leftSubtree = [Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, true], 
+          rightSubtree = [Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER, true];
     if (root.left !== null) {
-      leftMax = DC(root.left);
+      leftSubtree = DC(root.left);
     }
     
     if (root.right !== null) {
-      rightMax = DC(root.right);
+      rightSubtree = DC(root.right);
     }
     
-    const Max = Math.max(root.val, leftMax[0], rightMax[0]);
-    const Min = Math.min(root.val, leftMax[1], rightMax[1]);
+    const Max = Math.max(root.val, leftSubtree[0], rightSubtree[0]);
+    const Min = Math.min(root.val, leftSubtree[1], rightSubtree[1]);
     
-    if(leftMax[2] === false || rightMax[2] === false) {
+    if(leftSubtree[2] === false || rightSubtree[2] === false) {
       return [Max, Min, false];
     }
     
-    if (root.val > leftMax[0] && rightMax[1] > root.val) {
+    if (root.val > leftSubtree[0] && rightSubtree[1] > root.val) {
       return [Max, Min, true];
     } else {
       return [Max, Min, false];
