@@ -46,9 +46,6 @@ var cleanRoom = function(robot) {
   TurnRight.set("left", "up");
   
   BackTracking(0, 0, "up");
-  BackTracking(0, 0, "right");
-  BackTracking(0, 0, "down");
-  BackTracking(0, 0, "left");
   
   // direction in {up, right, down, left}
   function BackTracking(row, col, direction) {
