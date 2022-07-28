@@ -13,7 +13,63 @@
  */
 var isSameTree = function(p, q) {
   
-  return Recursion(p, q);
+  return Iteration(p, q);
+  
+  function Iteration(p, q) {
+    let pStack = [],
+        qStack = [];
+
+    pStack.push(p);
+    qStack.push(q);
+
+    while (pStack.length > 0) {
+      let pNode = pStack.pop();
+      let qNode = qStack.pop();
+      
+      if (!Check(pNode, qNode)) {
+        return false;  
+      }
+      
+      if (pNode !== null) {
+        if (!Check(pNode.left, qNode.left)) {
+          return false;
+        }
+        
+        if (pNode.left !== null) {
+          pStack.push(pNode.left);
+          qStack.push(qNode.left);
+        }
+        
+        if (!Check(pNode.right, qNode.right)) {
+          return false; 
+        }  
+        
+        if (pNode.right !== null) {
+          pStack.push(pNode.right); 
+          qStack.push(qNode.right);
+        }
+      }
+
+    }
+      
+    return true;
+  }
+  
+  function Check(p, q) {
+    if (p === null && q === null) {
+      return true;
+    }
+    
+    if (p === null || q === null) {
+      return false;
+    }
+    
+    if (p.val !== q.val) {
+      return false;
+    }
+    
+    return true;
+  }
 
   function Recursion(p, q) {
     if (p === null && q === null) {
