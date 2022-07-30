@@ -18,12 +18,11 @@ var inorderTraversal = function(root) {
   return path;
 
   function DFS(node) {
-    if (node === null) {
-      return;
+    if (node !== null) {
+      DFS(node.left);
+      path.push(node.val);
+      DFS(node.right); 
     }
     
-    DFS(node.left);
-    path.push(node.val);
-    DFS(node.right); 
   }    
 };
