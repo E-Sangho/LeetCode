@@ -44,28 +44,34 @@
  * 이제 남은 것은 넓이를 어느 블록까지 계산할지다.
  * 잠시 높이 h인 블록이 있다고 하자.
  * 높이가 h이면서 넓이가 최대가 되려면 양방향으로 높이가 h 이상인 블록까지 찾아야 한다.
- * 다시 말해 h > heights[left]인 블록 left와, h > heights[right]인 블록 right를 찾아야 한다.
+ * 다시 말해 h <= heights[left]인 가장 작은 left와, h <= heights[right]인 가장 큰 right를 찾아야 한다.
  * 이때 우리는 i + 1번째까지의 정보만을 알고 있으므로 right가 i + 1보다 커져서는 안 된다.
- * 그러므로 right는 i + 1이고, h >= heights[i + 1]인 경우까지만 계산하면 된다. 
+ * h보다 높고 가장 오른쪽에 있는 것은 i이므로 right는 i가 된다.
  *
- * left를 찾기 전에, 위 방법으로 계산하면 스택의 변화를 살펴보자.
- * 스택에서 heights[s] >= heights[i + 1]인 s는 모두 제거 된다.
- * 그러면 스택엔 heights[s] < heights[i + 1]인 s만 남는다.
- * 그러므로 스택의 제일 위의 점 s가 left가 된다.
+ * 현재 단계에서 확실히 넓이를 구할 수 있는 것은 heights[s] > heights[i + 1]인 경우 뿐이다.
+ * 그러므로 계산을 모두 수행하면 heights[s] > heights[i + 1]인 경우는 모두 스택에서 제거된다.
+ * 그러면 스택엔 heights[s] <= heights[i + 1]인 s만 남는다.
+ * 이는 s + 1이 heights[s + 1] > heights[i + 1]인 가장 왼쪽점이라는 의미다.
+ * 그러므로 스택의 제일 위의 점 s에 1을 더한 s + 1이 left가 된다.
  * 이때 스택이 비어 있을 수 있으므로 스택의 끝을 표시하는 수가 필요하다. 
- *
+ * 
  * 다만 이렇게 계산하면 마지막에 그래프가 꺽이지 않아서 계산하지 않는 부분이 생길 수 있다.
  * 이를 방지하기 위해 hegiths의 마지막으로 0을 추가해주면 간단히 해결할 수 있다.
+ * 계산이 끝난 이후엔 heights를 복원하기 위해 0을 지워준다.
  */
 
 var largestRectangleArea = function(heights) {
   heights.push(0);
   const N = heights.length;
-  let stack = [-1];
+  
+  // width를 계산할 때 i - (stack[top] + 1)로 계산한다.
+  // 스택의 끝부분을 계산할 때, stack[top] + 1은 0이 되어야 한다.
+  // 그러므로 -1을 스택의 초기값으로 설정해준다.
+  let stack = [-1]; 
   let maxArea = 0;
 
   for (let i = 0; i < N; ++i) {
-    while (heights[stack.at(-1)] >= heights[i]) {
+    while (heights[stack.at(-1)] > heights[i]) {
       let index = stack.pop();  
       let height = heights[index];
       let width = i - stack.at(-1) - 1;
