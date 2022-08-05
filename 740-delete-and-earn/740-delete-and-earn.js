@@ -5,17 +5,20 @@
 var deleteAndEarn = function(nums) {
   const N = nums.length;
   let Score = new Map();
-  let M = 0;
 
   for (let num of nums) {
     Score.has(num) ? 
       Score.set(num, Score.get(num) + num) : 
       Score.set(num, num);
-    M = Math.max(M, num);
   }
+    
+  let Nums = Array.from(new Set(nums));
+  
+  Nums.sort((a, b) => a - b);
+  
+  const M = Nums.at(-1);
   
   let dp = new Map();
-  
   dp.set(0, 0);
   dp.set(1, Score.has(1) ? Score.get(1) : 0);
   
