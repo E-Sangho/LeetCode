@@ -13,18 +13,15 @@ var maximalSquare = function(matrix) {
 
   for (let col = 0; col < n; ++col) {
     for (let row = 1; row <= m; ++row) {
+      save = dp[row];
       if (matrix[row - 1][col] === "1") {
-        save = dp[row];
         dp[row] = Math.min(dp[row], dp[row - 1], temp) + 1;
         ans = Math.max(ans, dp[row]);
-        temp = save;
       } else {
-        save = dp[row];
         dp[row] = 0;
-        temp = save;
       }  
+      temp = save;
     }
-    console.log(dp);
   }
   
   return ans * ans;
