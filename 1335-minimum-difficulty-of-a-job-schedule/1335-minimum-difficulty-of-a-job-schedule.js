@@ -61,10 +61,12 @@ var minDifficulty = function(jobDifficulty, d) {
     return -1;
   }
 
-  let dp = new Array(N).fill().map(() => new Array(d + 1).fill(Number.MAX_SAFE_INTEGER));
+  let dp = new Array(N + 1).fill().map(() => new Array(d + 1).fill(Number.MAX_SAFE_INTEGER));
   
-  return TopDown(0, 1);
+  /*
   // TopDown
+  return TopDown(0, 1);
+  
   function TopDown(index, day) {
     if (dp[index][day] !== Number.MAX_SAFE_INTEGER) {
       return dp[index][day];   
@@ -87,7 +89,9 @@ var minDifficulty = function(jobDifficulty, d) {
     
     return dp[index][day];
   }
-  /*
+  */
+  
+  // BottomUp
   let max = 0;
 
   for (let index = N - 1; index >= d - 1; --index) {
@@ -111,5 +115,4 @@ var minDifficulty = function(jobDifficulty, d) {
       dp[index][day] = Math.min(dp[index][day], difficulty + dp[k][day + 1]);
     }
   }
-  */
 };
