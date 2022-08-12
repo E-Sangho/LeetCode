@@ -41,9 +41,7 @@ var minDifficulty = function(jobDifficulty, d) {
   function calcdp(index, day) { // calcdp(4, 1)
     let difficulty = 0; 
     for (let k = index + 1; k <= (N - d + day); ++k) {
-      for (let l = index; l <= k - 1; ++l) {
-        difficulty = Math.max(difficulty, jobDifficulty[l]);  
-      }  
+      difficulty = Math.max(difficulty, jobDifficulty[k - 1]);  
       dp[index][day] = Math.min(dp[index][day], difficulty + dp[k][day + 1]);
     }
   }
