@@ -12,19 +12,13 @@ var wordBreak = function(s, wordDict) {
     for (let j = 0; j < M; ++j) {
       let wordLen = wordDict[j].length;
       
-      if (i - wordLen < -1) {
-        continue;
-      } 
-      
-      if (i - wordLen === -1) {
-        if (s.substring(0, i + 1) === wordDict[j]) {
-          dp[i] = true;
-        }
-        continue;
-      }
-
-      if (dp[i - wordLen] === true && s.substring(i - wordLen + 1, i + 1) === wordDict[j]) {
+      if (
+          i - wordLen >= -1 && 
+          ((i - wordLen === -1) || dp[i - wordLen] === true) &&
+          s.substring(i - wordLen + 1, i + 1) === wordDict[j]
+      ) {
         dp[i] = true;
+        break;
       }
       
     }
