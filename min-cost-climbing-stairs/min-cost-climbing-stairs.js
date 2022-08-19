@@ -5,14 +5,16 @@
 // dp[i] = min(dp[i - 1], dp[i - 2]) + cost[i]
 var minCostClimbingStairs = function(cost) {
   cost.push(0);
-  const N = cost.length;    
-  let dp = new Array(N);
-  dp[0] = cost[0];
-  dp[1] = cost[1];
-  
+
+  const N = cost.length;
+  let prev = cost[1], pprev = cost[0], temp;
   for (let i = 2; i < N; ++i) {
-    dp[i] = Math.min(dp[i - 1], dp[i - 2]) + cost[i];
+    temp = prev; 
+    prev = Math.min(pprev, prev) + cost[i];
+    pprev = temp;
   }
   
-  return dp[N - 1];
+  cost.pop();
+  
+  return prev;
 };
