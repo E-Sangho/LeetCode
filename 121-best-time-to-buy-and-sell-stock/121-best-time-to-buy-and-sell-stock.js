@@ -9,8 +9,9 @@ var maxProfit = function(prices) {
   for (let price of prices) {
     if (current > price) {
       current = price;
-    } else {
-      best = Math.max(best, price - current);
+    } 
+    if (price - current > best) {
+      best = price - current;
     }
   }    
   
