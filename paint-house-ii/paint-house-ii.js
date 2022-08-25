@@ -4,7 +4,8 @@
  */
 var minCostII = function(costs) {
   const N = costs.length,
-        M = costs[0].length;
+        M = costs[0].length,
+        BigNumber = 21000;
   
   /*
   for (let i = 1; i < N; ++i) {
@@ -15,7 +16,7 @@ var minCostII = function(costs) {
    */
   for (let i = 1; i < N; ++i) {
     for (let j = 0; j < M; ++j) {
-      let min = 21000;
+      let min = BigNumber;
       
       for (let k = 0; k < M; ++k) {
         if (j !== k) {
@@ -26,7 +27,7 @@ var minCostII = function(costs) {
     }
   }
   
-  let ans = 21000;
+  let ans = BigNumber;
     
   for (let i = 0; i < M; ++i) {
     ans = Math.min(ans, costs[N - 1][i]);
