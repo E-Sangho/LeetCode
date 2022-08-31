@@ -11,7 +11,7 @@
  */
 var mincostTickets = function(days, costs) {
   const lastDay = days.at(-1);
-  let dp = new Array(366).fill(0);
+  let dp = new Array(366);
 
   return TopDown(1);  
   
@@ -21,7 +21,7 @@ var mincostTickets = function(days, costs) {
     }
     
     if (days.includes(day)) {
-      if (dp[day] !== 0) {
+      if (dp[day] !== undefined) {
         return dp[day];
       }
 
