@@ -11,6 +11,8 @@
  */
 var mincostTickets = function(days, costs) {
   const lastDay = days.at(-1);
+  const daySet = new Set(days);
+  
   let dp = new Array(366);
 
   return TopDown(1);  
@@ -20,10 +22,11 @@ var mincostTickets = function(days, costs) {
       return 0;
     }
     
-    if (days.includes(day)) {
-      if (dp[day] !== undefined) {
-        return dp[day];
-      }
+    if (dp[day] !== undefined) {
+      return dp[day];
+    }
+    
+    if (daySet.has(day)) {
 
       dp[day] = Math.min(TopDown(day + 1) + costs[0], 
                          TopDown(day + 7) + costs[1], 
