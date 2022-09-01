@@ -34,7 +34,5 @@ var isInterleave = function(s1, s2, s3) {
     }
   }
   
-  console.log(dp);
-  
   return dp[n][m];
 };
