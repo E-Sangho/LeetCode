@@ -16,13 +16,9 @@ var topKFrequent = function(nums, k) {
     }
   }
   
-  console.log(counter);
-  
   for (let [key, val] of counter) {
     heap.push([val, key]);
   }
-  
-  console.log(heap);
   
   for (let i = 0; i < k; ++i) {
     ans.push(heap.pop());
