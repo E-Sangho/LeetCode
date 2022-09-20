@@ -14,7 +14,7 @@ var lastStoneWeight = function(stones) {
   while (heap.size() > 1) {
     let first = heap.pop(),
         second = heap.pop();
-    console.log(`first: ${first}, second: ${second}`);
+    
     if (first !== second) {
       heap.push(first - second);
     } 
