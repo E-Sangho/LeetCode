@@ -9,8 +9,6 @@ var minMeetingRooms = function(intervals) {
   intervals.sort((a, b) => {
     return a[0] - b[0];
   });
-  
-  console.log(intervals);
 
   for (let [sTime, eTime] of intervals) {
     while (sTime >= heap.top()) {
