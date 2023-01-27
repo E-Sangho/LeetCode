@@ -4,44 +4,47 @@ import java.util.Collections;
 
 class Solution {
     public int[] findDiagonalOrder(int[][] mat) {
-        if (mat == null || mat.length == 0) {
-            return new int[0];
-        }
         int m = mat.length,
-            n = mat[0].length,
-            index = 0;
-        
+            n = mat[0].length;
         int[] result = new int[m * n];
-        List<Integer> memo = new ArrayList<>();
+        int index = 0;
+        boolean isGoingUp = true;
+        int row = 0, col = 0;
         
-        for (int d = 0; d <  m + n - 1; ++d) {
-            int row, col;
-            
-            if (d < n) {
-                row = 0;
-                col = d;
+        while (row < m && col < n) {
+            result[index++] = mat[row][col];
+            if (isGoingUp) {
+               if (col == n - 1) {
+                    row += 1; 
+                    isGoingUp = false;
+                    continue;
+               }
+                
+               if (row == 0) {
+                    col += 1;    
+                    isGoingUp = false;
+                    continue;
+               }  
+                
+               --row;
+                ++col;
             } else {
-                row = d - (n - 1);
-                col = n - 1;
-            }
-            
-            while (0 <= col && row < m) {
-                memo.add(mat[row][col]);
+                if (row == m - 1) {
+                    col += 1;
+                    isGoingUp = true;
+                    continue;
+                }
+                
+                if (col == 0) {
+                    row += 1;
+                    isGoingUp = true;
+                    continue;
+                }    
+                
                 ++row;
                 --col;
             }
-            
-            if (d % 2 == 0) {
-                Collections.reverse(memo);
-            }
-            
-            for (int i = 0; i < memo.size(); ++i) {
-                result[index++] = memo.get(i);
-            }
-            
-            memo.clear();
         }
-        
         return result;
     }
 }
