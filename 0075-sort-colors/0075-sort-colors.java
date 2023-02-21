@@ -17,7 +17,7 @@ class Solution {
     }
     
     public void countingSort(int[] nums) {
-        int N = 3;
+        int N = 301;
         int[] counting = new int[N];
         int[] ans = new int[nums.length];
         
