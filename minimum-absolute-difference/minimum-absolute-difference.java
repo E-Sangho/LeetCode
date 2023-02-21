@@ -8,19 +8,16 @@ class Solution {
         
         for (int i = 0; i < arr.length - 1; ++i) {
             int diff = arr[i + 1] - arr[i];
-            if (diff < minDiff) {
-                minDiff = diff;
-                ans.clear();
+            if (diff <= minDiff) {
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    ans.clear();
+                }
                 List<Integer> pair = new ArrayList<>();
                 pair.add(arr[i]);
                 pair.add(arr[i + 1]);
                 ans.add(pair);
-            } else if (diff == minDiff) {
-                List<Integer> pair = new ArrayList<>();
-                pair.add(arr[i]);
-                pair.add(arr[i + 1]);
-                ans.add(pair);
-            }
+            } 
         }
         
         return ans;
