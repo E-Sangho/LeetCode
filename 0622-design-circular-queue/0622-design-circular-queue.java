@@ -3,11 +3,13 @@ class MyCircularQueue {
     int front;
     int rear;
     int size;
+    int maxSize;
     
     // MyCircularQueue(k) Initializes the object with the size of the queue to be k.
     public MyCircularQueue(int k) {
         queue = new int[k];           
-        size = k;
+        size = 0;
+        maxSize = k;
         front = 0;
         rear = -1;
     }
@@ -16,8 +18,9 @@ class MyCircularQueue {
     public boolean enQueue(int value) {
         if (this.isFull()) return false;
         
-        rear = (rear + 1) % size;
+        rear = (rear + 1) % maxSize;
         queue[rear] = value;
+        ++size;
         return true;
     }
     
@@ -25,12 +28,8 @@ class MyCircularQueue {
     public boolean deQueue() {
         if (this.isEmpty()) return false;
         
-        if (front == rear) {
-            front = 0;
-            rear = -1;
-        } else {
-            front = (front + 1) % size;
-        }
+        front = (front + 1) % maxSize;
+        --size;
         
         return true;
     }
@@ -47,12 +46,12 @@ class MyCircularQueue {
     
     // boolean isEmpty() Checks whether the circular queue is empty or not.
     public boolean isEmpty() {
-        return rear == -1;
+        return size == 0;
     }
     
     // boolean isFull() Checks whether the circular queue is full or not.
     public boolean isFull() {
-        return !this.isEmpty() && (rear + 1) % size == front;
+        return size == maxSize;
     }
 }
 
