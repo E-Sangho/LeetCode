@@ -1,47 +1,63 @@
+class Node {
+    int val;
+    Node next;
+    
+    public Node(int val, Node next) {
+        this.val = val;
+        this.next = next;
+    }
+}
+
 class MyCircularQueue {
-    int[] queue;
-    int front;
-    int rear;
     int size;
     int maxSize;
-    
+    Node head;
+    Node tail;
+   
     // MyCircularQueue(k) Initializes the object with the size of the queue to be k.
     public MyCircularQueue(int k) {
-        queue = new int[k];           
         size = 0;
         maxSize = k;
-        front = 0;
-        rear = -1;
+        head = null;
+        tail = null;
     }
     
     // boolean enQueue(int value) Inserts an element into the circular queue. Return true if the operation is successful.
     public boolean enQueue(int value) {
-        if (this.isFull()) return false;
+        if (isFull()) {
+            return false;
+        }  
         
-        rear = (rear + 1) % maxSize;
-        queue[rear] = value;
+        Node newNode = new Node(value, null);
+        if (isEmpty()) {
+            head = newNode;
+            tail = newNode;
+        } else {
+            tail.next= newNode;
+            tail = newNode;
+        }
+        
         ++size;
         return true;
     }
     
     // boolean deQueue() Deletes an element from the circular queue. Return true if the operation is successful.
     public boolean deQueue() {
-        if (this.isEmpty()) return false;
+        if (isEmpty()) return false;
         
-        front = (front + 1) % maxSize;
+        head = head.next;
         --size;
-        
         return true;
     }
     
     // int Front() Gets the front item from the queue. If the queue is empty, return -1.
     public int Front() {
-        return this.isEmpty() ? -1 : queue[front];
+        return isEmpty() ? -1 : head.val;
     }
     
     // int Rear() Gets the last item from the queue. If the queue is empty, return -1.
     public int Rear() {
-        return this.isEmpty() ? -1 : queue[rear];
+        return isEmpty() ? -1 : tail.val;
     }
     
     // boolean isEmpty() Checks whether the circular queue is empty or not.
