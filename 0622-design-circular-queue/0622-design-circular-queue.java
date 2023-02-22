@@ -14,28 +14,22 @@ class MyCircularQueue {
     
     // boolean enQueue(int value) Inserts an element into the circular queue. Return true if the operation is successful.
     public boolean enQueue(int value) {
-        if (this.isFull()) {
-            return false;
-        }
+        if (this.isFull()) return false;
         
-        ++rear;
-        rear %= size;
+        rear = (rear + 1) % size;
         queue[rear] = value;
         return true;
     }
     
     // boolean deQueue() Deletes an element from the circular queue. Return true if the operation is successful.
     public boolean deQueue() {
-        if (this.isEmpty()) {
-            return false;
-        }    
+        if (this.isEmpty()) return false;
         
         if (front == rear) {
             front = 0;
             rear = -1;
         } else {
-            ++front;
-            front %= size;
+            front = (front + 1) % size;
         }
         
         return true;
@@ -43,41 +37,23 @@ class MyCircularQueue {
     
     // int Front() Gets the front item from the queue. If the queue is empty, return -1.
     public int Front() {
-        if (this.isEmpty()) {
-            return -1;
-        }
-        
-        return queue[front];    
+        return this.isEmpty() ? -1 : queue[front];
     }
     
     // int Rear() Gets the last item from the queue. If the queue is empty, return -1.
     public int Rear() {
-        if (this.isEmpty()) {
-            return -1;
-        }
-        
-        return queue[rear]; 
+        return this.isEmpty() ? -1 : queue[rear];
     }
     
     // boolean isEmpty() Checks whether the circular queue is empty or not.
     public boolean isEmpty() {
-        if (rear == -1) {
-            return true;
-        }    
-        
-        return false;
+        return rear == -1;
     }
     
     // boolean isFull() Checks whether the circular queue is full or not.
     public boolean isFull() {
-        if (!this.isEmpty() && (rear + 1) % size == front) {
-            return true;    
-        }
-        
-        return false;
+        return !this.isEmpty() && (rear + 1) % size == front;
     }
-    
-  
 }
 
 /**
