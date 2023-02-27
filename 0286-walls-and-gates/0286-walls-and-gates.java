@@ -1,22 +1,26 @@
 class Solution {
-    private final int EMPTY = Integer.MAX_VALUE;
-    private final int GATE = 0;
-    private final List<int[]> directions = Arrays.asList(
-        new int[] {1, 0},
-        new int[] {0, 1},
-        new int[] {-1, 0},
-        new int[] {0, -1}
-    );
+    static final int WALL = -1,
+              GATE =  0,
+              INF  =  Integer.MAX_VALUE;
+    static final int[][] direction  =  {
+            {-1, 0},
+            {0, 1},
+            {1, 0},
+            {0, -1}
+        };
+
+            
     
     public void wallsAndGates(int[][] rooms) {
-        Queue<int[]> queue = new LinkedList<>();
         int m = rooms.length,
             n = rooms[0].length;
+        
+        Queue<int[]> queue = new LinkedList<>();
         
         for (int r = 0; r < m; ++r) {
             for (int c = 0; c < n; ++c) {
                 if (rooms[r][c] == GATE) {
-                    queue.add(new int[] {r, c});
+                    queue.offer(new int[]{ r, c });
                 }
             }
         }
@@ -27,27 +31,29 @@ class Solution {
     public void BFS(int[][] rooms, Queue<int[]> queue) {
         int m = rooms.length,
             n = rooms[0].length;
-        while (!queue.isEmpty()) {
-            int[] front = queue.poll();
-            int cRow = front[0],
-                cCol = front[1];
+        
+        while (queue.size() > 0) {
+            int curSize = queue.size();
             
-            for (int i = 0; i < 4; ++i) {
-                int[] dir = directions.get(i);
-                int nRow = cRow + dir[0],
-                    nCol = cCol + dir[1];
+            for (int i = 0; i < curSize; ++i) {
+                int[] front = queue.poll();
+                int row = front[0],
+                    col = front[1];
                 
-                if (isInLand(nRow, nCol, m, n)) {
-                    if (rooms[nRow][nCol] == EMPTY) {
-                        rooms[nRow][nCol] = rooms[cRow][cCol] + 1;
-                        queue.add(new int[] {nRow, nCol});
+                for (int d = 0; d < 4; ++d) {
+                    int nearRow = row + direction[d][0],
+                        nearCol = col + direction[d][1];
+                    
+                    if (isInBox(nearRow, nearCol, m, n) && rooms[nearRow][nearCol] == INF) {
+                        rooms[nearRow][nearCol] = rooms[row][col] + 1;
+                        queue.offer(new int[] { nearRow, nearCol });
                     }
-                }
+                } 
             }
         }
     }
     
-    public boolean isInLand(int row, int col, int m, int n) {
+    public boolean isInBox(int row, int col, int m, int n) {
         if (
             0 <= row &&
             row < m  &&
