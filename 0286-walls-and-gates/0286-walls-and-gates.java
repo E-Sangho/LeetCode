@@ -14,26 +14,27 @@ class Solution {
     public void wallsAndGates(int[][] rooms) {
         int m = rooms.length,
             n = rooms[0].length;
-        
-        Queue<int[]> queue = new LinkedList<>();
-        
+
         for (int r = 0; r < m; ++r) {
             for (int c = 0; c < n; ++c) {
                 if (rooms[r][c] == GATE) {
-                    queue.offer(new int[]{ r, c });
+                    BFS(rooms, r, c);   
                 }
             }
         }
-        
-        BFS(rooms, queue);
     }
     
-    public void BFS(int[][] rooms, Queue<int[]> queue) {
+    public void BFS(int[][] rooms, int r, int c) {
         int m = rooms.length,
             n = rooms[0].length;
+                
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{ r, c });
+        int depth = 0;
         
         while (queue.size() > 0) {
             int curSize = queue.size();
+            ++depth;
             
             for (int i = 0; i < curSize; ++i) {
                 int[] front = queue.poll();
@@ -44,8 +45,8 @@ class Solution {
                     int nearRow = row + direction[d][0],
                         nearCol = col + direction[d][1];
                     
-                    if (isInBox(nearRow, nearCol, m, n) && rooms[nearRow][nearCol] == INF) {
-                        rooms[nearRow][nearCol] = rooms[row][col] + 1;
+                    if (isInBox(nearRow, nearCol, m, n) && depth < rooms[nearRow][nearCol]) {
+                        rooms[nearRow][nearCol] = depth;
                         queue.offer(new int[] { nearRow, nearCol });
                     }
                 } 
