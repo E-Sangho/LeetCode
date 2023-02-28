@@ -5,17 +5,18 @@ class Solution {
     
     // BFS
     public int BFS(String[] deadends, String target) {
-        if (contains(deadends, "0000")) {
-            return -1;
-        }
         boolean[] dp = new boolean[10000];
         Queue<String> queue = new LinkedList<>();
         queue.add("0000");
-        dp[0] = true;
-        
         for (int i = 0; i < deadends.length; ++i) {
             dp[Integer.parseInt(deadends[i])] = true;
         }
+        if (dp[0] == true) {
+            return -1;
+        }
+        dp[0] = true;
+        
+
         
         int turns = -1;
         
@@ -69,15 +70,5 @@ class Solution {
         }
         
         return nexts;
-    }
-    
-    public boolean contains(String[] deadends, String x) {
-        for (int i = 0; i < deadends.length; ++i) {
-            if (deadends[i].equals(x)) {
-                return true;
-            }
-        }
-        
-        return false;
     }
 }
