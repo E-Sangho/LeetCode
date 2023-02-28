@@ -1,4 +1,7 @@
 class Solution {
+    // declare global variables
+    
+    // directions of adjacent lands
     final int direction[][] = new int[][]{
         {-1, 0},
         {0, 1},
@@ -6,6 +9,7 @@ class Solution {
         {0, -1},
     };
     
+    // make constant variables for water and island 
     final char ISLAND = '1',
                WATER = '0';
     
@@ -26,6 +30,7 @@ class Solution {
         return total;
     }
     
+    // bfs search
     public void BFS(char[][] grid, int r, int c) {
         int m = grid.length,
             n = grid[0].length;
@@ -53,6 +58,7 @@ class Solution {
         }
     }
     
+    // check (r, c) is in grid or not
     public boolean isInEarth(int r, int c, int m, int n) {
         if (
             0 <= r &&
