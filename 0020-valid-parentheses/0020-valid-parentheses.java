@@ -4,27 +4,17 @@ class Solution {
         char[] chars = s.toCharArray();
         
         for (char c : chars) {
-            if (c == '(' || c =='{' || c =='[') {
-                stack.push(c);
-                continue;
-            }  
-            
-            if (
-                (stack.size() > 0 && c == ')' && stack.peek() == '(') ||
-                (stack.size() > 0 && c == '}' && stack.peek() == '{') ||
-                (stack.size() > 0 && c == ']' && stack.peek() == '[')
-            ) {
-                stack.pop();        
-                continue;
-            } else {
+            if (c == '(') {
+                stack.push(')');
+            } else if (c == '{') {
+                stack.push('}');
+            } else if (c == '[') {
+                stack.push(']');
+            } else if (stack.size() == 0 || stack.pop() != c) {
                 return false;
             }
         }
         
-        if (stack.size() > 0) {
-            return false;
-        }
-        
-        return true;
+        return stack.isEmpty();
     }
 }
