@@ -30,24 +30,15 @@ class Solution {
         int m = grid.length,
             n = grid[0].length;
         
-        Stack<int[]> stack = new Stack<>();     
-        stack.push(new int[] { r, c });
-        
-        while (stack.size() > 0) {
-            int[] front = stack.pop();
-            int row = front[0],
-                col = front[1];
+        for (int d = 0; d < 4; ++d) {
+            int nextRow = r + directions[d][0],
+                nextCol = c + directions[d][1];
             
-            for (int d = 0; d < 4; ++d) {
-                int nextRow = row + directions[d][0],
-                    nextCol = col + directions[d][1];
-                
-                if (isInEarth(nextRow, nextCol, m, n) && grid[nextRow][nextCol] == ISLAND) {
-                    grid[nextRow][nextCol] = WATER;
-                    stack.push(new int[] { nextRow, nextCol });
-                }
+            if (isInEarth(nextRow, nextCol, m, n) && grid[nextRow][nextCol] == ISLAND) {
+                grid[nextRow][nextCol] = WATER;
+                DFS(grid, nextRow, nextCol);
             }
-        }
+        }  
     } 
     
     public boolean isInEarth(int r, int c, int m, int n) {
@@ -62,5 +53,4 @@ class Solution {
         
         return false;
     }
-    
 }
