@@ -22,7 +22,6 @@ class Solution {
         }
         
         int result = climb(n);
-        System.out.println(Arrays.toString(dp));
         return result;
     }
     
