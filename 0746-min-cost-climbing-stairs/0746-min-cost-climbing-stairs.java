@@ -1,28 +1,18 @@
 class Solution {
     static int[] dp;
-    static int[] costGlobal;;
+    static int[] cost;
     public int minCostClimbingStairs(int[] cost) {
         /*
          * dp[i] := sum of costs for 0 ~ ith index;
          * dp[i] = min(dp[i - 1] + cost[i], dp[i - 2] + cost[i])
          */
         int n = cost.length;
-        costGlobal = new int[n + 1];
+        this.cost = cost;
         
-        for (int i = 0; i < n; ++i) {
-            costGlobal[i] = cost[i];
-        }
+        dp = new int[n];
+        Arrays.fill(dp, -1); 
         
-        costGlobal[n] = 0;
-        
-        dp = new int[n + 1];
-        
-        for (int i = 0; i <= n; ++i) {
-            dp[i] = -1;
-        }
-        
-        int result = climb(n);
-        return result;
+        return Math.min(climb(n - 1), climb(n - 2));
     }
     
     public static int climb(int i) {
@@ -34,7 +24,7 @@ class Solution {
             return dp[i];
         } 
         
-        dp[i] = Math.min(costGlobal[i] + climb(i - 1), costGlobal[i] + climb(i - 2));
+        dp[i] = Math.min(cost[i] + climb(i - 1), cost[i] + climb(i - 2));
         return dp[i]; 
     }
 }
